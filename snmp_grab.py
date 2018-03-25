@@ -4,7 +4,7 @@ import yaml
 from pprint import pprint as pp
 from snmp_helper import snmp_get_oid, snmp_extract
 
-with open("../config/devices.yml") as f:
+with open("../store/inventory/devices.yml") as f:
   devices = yaml.load(f)
 
 for device in devices['devices']:

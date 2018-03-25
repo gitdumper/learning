@@ -4,7 +4,7 @@ import yaml
 from pprint import pprint as pp
 from netmiko import Netmiko
 
-with open("../config/devices.yml") as f:
+with open("../store/inventory/devices.yml") as f:
   devices = yaml.load(f)
 
 for device in devices['devices']:
@@ -15,13 +15,16 @@ for device in devices['devices']:
        }
 
   nc = Netmiko(**dd)
+  nf = open('../store/output/{}.out'.format(device['host']), 'w')
   output = nc.send_command('show version')
-  print('###!!! show version !!!###')
-  print(output)
-  print('\n\n')
+  nf.write('###!!! show version !!!###\n')
+  nf.write(output)
+  nf.write('\n')
   output = nc.send_command('show inventory')
-  print('###!!! show inventory !!!###')
-  print(output)
-
+  nf.write('###!!! show inventory !!!###\n')
+  nf.write(output)
+  nf.write('\n')
+  nf.close()
+  nc.disconnect()
   
 
